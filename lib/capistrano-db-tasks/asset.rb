@@ -7,6 +7,7 @@ module Asset
     port = server.netssh_options[:port] || 22
     user = server.netssh_options[:user]
     [cap.fetch(:assets_dir)].flatten.each do |dir|
+      puts "rsync -avrt --recursive --times --compress --human-readable --progress --delete --rsh='ssh -p #{port}' #{user}@#{server}:#{cap.current_path}/#{dir} #{cap.fetch(:local_assets_dir)}"
       system("rsync -avrt --recursive --times --compress --human-readable --progress --delete --rsh='ssh -p #{port}' #{user}@#{server}:#{cap.current_path}/#{dir} #{cap.fetch(:local_assets_dir)}")
     end
   end
